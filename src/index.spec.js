@@ -104,5 +104,4 @@ describe('error handler', ()=>{
       expect(newError).to.eql({error: {message: 'there was no error passed'}});
     })
   })
-
 });
