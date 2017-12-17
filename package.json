@@ -13,8 +13,7 @@
   },
   "keywords": [
     "error-handling",
-    "async",
-    "await",
+    "async/await",
     "error"
   ],
   "author": "Joe Wemyss <joe.wemyss@javathenutt.com>",

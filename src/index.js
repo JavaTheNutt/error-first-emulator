@@ -11,6 +11,8 @@ module.exports = exports = {
     const returnedError = {error: {message: message || err.message}};
     if(err && message) returnedError.error.message += `: ${err.message}`;
     return returnedError;
-  }
+  },
+  formatConciseSendableError:message => exports.formatVerboseSendableError(message),
+
 };
 
