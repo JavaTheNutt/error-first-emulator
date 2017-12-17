@@ -55,4 +55,31 @@ describe('error handler', ()=>{
       })
     })
   })
+  describe('format verbose sendable error', ()=>{
+    it('should format an error correctly to be delivered to the user when there is an error present', () => {
+      const err      = new Error('this is an error');
+      const message  = 'this is a custom error message';
+      const newError = errorUtils.formatVerboseSendableError(message, err);
+      expect(newError).to.eql({error: {message: `${message}: ${err.message}`}});
+    });
+    it('should format an error correctly to be delivered to the user when there is not an error present', () => {
+      const message  = 'this is a custom error message';
+      const newError = errorUtils.formatVerboseSendableError(message);
+      expect(newError).to.eql({error: {message}});
+    });
+    it('should strip  the status code before sending', () => {
+      const message  = 'this is a custom error message';
+      const newError = errorUtils.formatVerboseSendableError(message, null, 404);
+      expect(newError).to.eql({error: {message}});
+    });
+    it('should use the error message when there is no message passed', ()=>{
+      const err = new Error('i am an error');
+      const newError = errorUtils.formatVerboseSendableError(null, err);
+      expect(newError).to.eql({error:{message: 'i am an error'}})
+    });
+    it('should return a standard error when there is no error or message passed', ()=>{
+      const newError = errorUtils.formatVerboseSendableError();
+      expect(newError).to.eql({error: {message: 'there was no error passed'}});
+    })
+  })
 });
