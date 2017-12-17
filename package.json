@@ -1,0 +1,36 @@
+{
+  "name": "error-first-emulator",
+  "version": "0.0.1",
+  "description": "simple, lightweight, dependency-free library to emulate error-first handling in async/await scenarios",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JavaTheNutt/error-first-emulator.git"
+  },
+  "keywords": [
+    "error-handling",
+    "async",
+    "await",
+    "error"
+  ],
+  "author": "Joe Wemyss <joe.wemyss@javathenutt.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JavaTheNutt/error-first-emulator/issues"
+  },
+  "homepage": "https://github.com/JavaTheNutt/error-first-emulator#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
+    "eslint": "^4.13.1",
+    "eslint-plugin-json": "^1.2.0",
+    "mocha": "^4.0.1",
+    "sinon": "^4.1.3",
+    "sinon-chai": "^2.14.0"
+  }
+}
