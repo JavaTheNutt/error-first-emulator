@@ -1,6 +1,6 @@
 {
   "name": "error-first-emulator",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "simple, lightweight, dependency-free library to emulate error-first handling in async/await scenarios",
   "main": "index.js",
   "scripts": {
