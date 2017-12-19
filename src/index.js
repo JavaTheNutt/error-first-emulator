@@ -14,7 +14,10 @@ exports.formatVerboseSendableError = (message, err) =>{
 };
 exports.formatConciseSendableError = message => exports.formatVerboseSendableError(message);
 exports.updateStatusCode = (err, code) => {
-  console.log(JSON.stringify(err));
   if(!code && !err.code) return err;
   return exports.errorFormatter(err.error.message, err.error.err, code, err.error.timestamp);
+};
+exports.serializeError = error =>{
+  const props = Object.getOwnPropertyNames(error);
+  return {message: error.message, stack:  error.stack}
 };

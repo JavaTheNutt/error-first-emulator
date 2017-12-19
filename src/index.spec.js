@@ -128,4 +128,27 @@ describe('error handler', ()=>{
       expect(result).to.equal(err);
     });
   });
+  describe('serialise errors', ()=>{
+    it('should not return the source object', ()=>{
+      const error = new Error('i am an error');
+      const returnedError = errorUtils.serializeError(error);
+      expect(returnedError).to.not.equal(error);
+    });
+    it('should have a message property', ()=>{
+      const error = new Error('i am an error');
+      const returnedError = errorUtils.serializeError(error);
+      expect(returnedError.message).to.equal(error.message);
+    });
+    it('should have a stack property', ()=>{
+      const error = new Error('i am an error');
+      const returnedError = errorUtils.serializeError(error);
+      expect(returnedError.stack).to.exist;
+    });
+    it('the stack property should equal the original stack', ()=>{
+      const error = new Error('i am an error');
+      const returnedError = errorUtils.serializeError(error);
+      expect(returnedError.stack).to.equal(error.stack);
+    });
+
+  })
 });
