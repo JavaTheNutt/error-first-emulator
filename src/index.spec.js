@@ -5,14 +5,13 @@ const errorUtils = require('./index');
 describe('error handler', ()=>{
   describe('error formatter', ()=>{
     it('should correctly return an error object with an error', () => {
-      const err      = new Error('this is an error');
-      const message  = 'this is a custom error message';
+      const err = new Error('this is an error');
+      const message = 'this is a custom error message';
       const newError = errorUtils.errorFormatter(message, err);
+      const serialisedError = errorUtils.serializeError(err);
       expect(newError.error).to.deep.include({
-
-          message,
-          err
-
+        message,
+        err:serialisedError
       });
     });
     it('should correctly return an error object without an error', () => {
@@ -24,22 +23,19 @@ describe('error handler', ()=>{
       const err     = new Error('i am an error');
       const message = 'not found';
       const newErr  = errorUtils.errorFormatter(message, err, 404);
+      const serialisedError = errorUtils.serializeError(err);
       expect(newErr.error).to.deep.include({
-
           message,
-          err,
+          err:serialisedError,
           status: 404
-
       });
     });
     it('should correctly return an error object with an attached status code and no error', () => {
       const message = 'not found';
       const newErr  = errorUtils.errorFormatter(message, null, 404);
       expect(newErr.error).to.deep.include({
-
           message,
           status: 404
-
       });
     });
     it('should error when no message is passed', ()=>{
@@ -54,6 +50,18 @@ describe('error handler', ()=>{
       const time = Date.now();
       const newErr = errorUtils.errorFormatter('i am a message');
       expect(newErr.error.timestamp).within(time - 5000, time + 5000);
+    });
+    it('should create a new instance of the error object', ()=>{
+      const err = new Error('this is an error');
+      const message = 'this is a custom error message';
+      const newError = errorUtils.errorFormatter(message, err);
+      const serialisedError = errorUtils.serializeError(err);
+      expect(newError.error).to.deep.include({
+        message,
+        err:serialisedError
+      });
+      expect(newError.error.err).to.eql(serialisedError);
+      expect(newError.error.err).to.not.equal(serialisedError);
     })
   });
   describe('format verbose sendable error', ()=>{
@@ -155,6 +163,11 @@ describe('error handler', ()=>{
       const returnedError = errorUtils.serializeError(error);
       expect(returnedError.name).to.equal(error.name);
     });
-
+    it('should return the source error if it is already serialized', ()=>{
+      const error = new Error('i am an error');
+      const returnedError01 = errorUtils.serializeError(error);
+      const returnedError02 = errorUtils.serializeError(returnedError01);
+      expect(returnedError01).to.equal(returnedError02);
+    })
   })
 });
