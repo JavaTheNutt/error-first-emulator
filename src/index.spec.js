@@ -54,7 +54,7 @@ describe('error handler', ()=>{
         }
       })
     })
-  })
+  });
   describe('format verbose sendable error', ()=>{
     it('should format an error correctly to be delivered to the user when there is an error present', () => {
       const err      = new Error('this is an error');
@@ -103,5 +103,28 @@ describe('error handler', ()=>{
       const newError = errorUtils.formatConciseSendableError(null, new Error('i am an error'));
       expect(newError).to.eql({error: {message: 'there was no error passed'}});
     })
+  });
+  describe('update status code', ()=> {
+    it('should update the status code when there is no status code on the error', ()=>{
+      const err = errorUtils.errorFormatter('i am an error');
+      const result = errorUtils.updateStatusCode(err, 500);
+      expect(result).to.eql(errorUtils.errorFormatter('i am an error',null, 500));
+    });
+    it('should update the status code when there is a status code on the error', ()=>{
+      const err = errorUtils.errorFormatter('i am an error', null, 400);
+      const result = errorUtils.updateStatusCode(err, 500);
+      expect(result).to.eql(errorUtils.errorFormatter('i am an error',null, 500));
+    });
+    it('should return a new object', ()=>{
+      const err = errorUtils.errorFormatter('i am an error', null, 400);
+      const result = errorUtils.updateStatusCode(err, 500);
+      expect(result).to.eql(errorUtils.errorFormatter('i am an error',null, 500));
+      expect(result).to.not.equal(err);
+    });
+    it('should return the source object when the object does not contain a code and a code is not passed', ()=>{
+      const err = errorUtils.errorFormatter('i am an error');
+      const result = errorUtils.updateStatusCode(err);
+      expect(result).to.equal(err);
+    });
   })
 });

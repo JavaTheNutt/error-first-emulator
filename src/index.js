@@ -12,5 +12,7 @@ exports.formatVerboseSendableError = (message, err) =>{
   return returnedError;
 };
 exports.formatConciseSendableError = message => exports.formatVerboseSendableError(message);
-
-
+exports.updateStatusCode = (err, code) => {
+  if(!code && !err.code) return err;
+  return Object.assign({}, {error: Object.assign(err.error, {status:code})})
+};
