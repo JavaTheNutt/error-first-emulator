@@ -18,7 +18,15 @@ const someAsynchronousFunction = async () => {
 }
 const someOtherAction = async () => {
   const result = await someAsynchronousFunction();
+  //result = {error:{message: 'something went wrong while doing something else', err: Error}}
   if(result.error) return result; //pass error back up the stack
   doSomethingWith(result);
 }
 ```
+This library also has the ability to pass status codes along with the error:
+ `errorHandler.errorFormatter('something went wrong', new Error('I am an error'), 401);`
+  will return `{error: {message: 'I am an error', err: Error, 401 }}`.
+  
+This project is still under development, so if you see anything broken please write an issue. Better yet, send me a pull request.
+
+
