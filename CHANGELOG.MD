@@ -1,3 +1,10 @@
+**v0.1.0**
+
+*_Dec 17, 2017_*
+
+- Added support for status codes
+- Added serialize Errors to plain objects
+
 **v0.0.2**
 
 *_Dec 17, 2017_*
