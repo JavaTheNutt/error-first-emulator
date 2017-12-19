@@ -1,9 +1,5 @@
-const chai   = require('chai');
-const expect = chai.expect;
-chai.use(require('sinon-chai'));
-const sinon = require('sinon');
+const expect   = require('chai').expect;
 
-const sandbox        = sinon.sandbox.create();
 const errorUtils = require('./index');
 
 describe('error handler', ()=>{
@@ -126,5 +122,5 @@ describe('error handler', ()=>{
       const result = errorUtils.updateStatusCode(err);
       expect(result).to.equal(err);
     });
-  })
+  });
 });
