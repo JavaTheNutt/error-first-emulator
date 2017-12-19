@@ -8,38 +8,38 @@ describe('error handler', ()=>{
       const err      = new Error('this is an error');
       const message  = 'this is a custom error message';
       const newError = errorUtils.errorFormatter(message, err);
-      expect(newError).to.eql({
-        error: {
+      expect(newError.error).to.deep.include({
+
           message,
           err
-        }
+
       });
     });
     it('should correctly return an error object without an error', () => {
       const message  = 'this is a custom error message';
       const newError = errorUtils.errorFormatter(message);
-      expect(newError).to.eql({error: {message}});
+      expect(newError.error.message).to.equal(message);
     });
     it('should correctly return an error object with an attached status code, and error', () => {
       const err     = new Error('i am an error');
       const message = 'not found';
       const newErr  = errorUtils.errorFormatter(message, err, 404);
-      expect(newErr).to.eql({
-        error: {
+      expect(newErr.error).to.deep.include({
+
           message,
           err,
           status: 404
-        }
+
       });
     });
     it('should correctly return an error object with an attached status code and no error', () => {
       const message = 'not found';
       const newErr  = errorUtils.errorFormatter(message, null, 404);
-      expect(newErr).to.eql({
-        error: {
+      expect(newErr.error).to.deep.include({
+
           message,
           status: 404
-        }
+
       });
     });
     it('should error when no message is passed', ()=>{
@@ -49,6 +49,11 @@ describe('error handler', ()=>{
           message:'there was no error passed'
         }
       })
+    });
+    it('should add a timestamp when there is no timestamp present', ()=>{
+      const time = Date.now();
+      const newErr = errorUtils.errorFormatter('i am a message');
+      expect(newErr.error.timestamp).within(time - 5000, time + 5000);
     })
   });
   describe('format verbose sendable error', ()=>{
@@ -104,17 +109,17 @@ describe('error handler', ()=>{
     it('should update the status code when there is no status code on the error', ()=>{
       const err = errorUtils.errorFormatter('i am an error');
       const result = errorUtils.updateStatusCode(err, 500);
-      expect(result).to.eql(errorUtils.errorFormatter('i am an error',null, 500));
+      expect(result.error).to.deep.include({message: 'i am an error', status: 500});
     });
     it('should update the status code when there is a status code on the error', ()=>{
       const err = errorUtils.errorFormatter('i am an error', null, 400);
       const result = errorUtils.updateStatusCode(err, 500);
-      expect(result).to.eql(errorUtils.errorFormatter('i am an error',null, 500));
+      expect(result.error).to.deep.include({message: 'i am an error', status: 500});
     });
     it('should return a new object', ()=>{
       const err = errorUtils.errorFormatter('i am an error', null, 400);
       const result = errorUtils.updateStatusCode(err, 500);
-      expect(result).to.eql(errorUtils.errorFormatter('i am an error',null, 500));
+      expect(result.error).to.deep.include({message: 'i am an error', status: 500});
       expect(result).to.not.equal(err);
     });
     it('should return the source object when the object does not contain a code and a code is not passed', ()=>{
