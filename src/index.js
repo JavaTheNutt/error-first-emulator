@@ -19,5 +19,7 @@ exports.updateStatusCode = (err, code) => {
 };
 exports.serializeError = error =>{
   const props = Object.getOwnPropertyNames(error);
-  return {message: error.message, stack:  error.stack}
+  const returnedError = {};
+  props.forEach(prop => returnedError[prop] = error[prop]);
+  return returnedError;
 };

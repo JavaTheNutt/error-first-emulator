@@ -149,6 +149,12 @@ describe('error handler', ()=>{
       const returnedError = errorUtils.serializeError(error);
       expect(returnedError.stack).to.equal(error.stack);
     });
+    it('should retain custom error properties', ()=>{
+      const error = new Error('i am an error');
+      error.name = 'UnspecifiedException';
+      const returnedError = errorUtils.serializeError(error);
+      expect(returnedError.name).to.equal(error.name);
+    });
 
   })
 });
