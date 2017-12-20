@@ -1,8 +1,8 @@
 {
   "presets": [
     [
-      "es2015",
       "flow"
     ]
-  ]
+  ],
+  "plugins": ["transform-es2015-classes"]
 }

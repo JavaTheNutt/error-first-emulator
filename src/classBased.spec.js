@@ -35,5 +35,32 @@ describe('error utils', ()=>{
       const err = new errorUtils.errorWrapper(null, null, null, time);
       expect(err.timestamp).to.equal(time);
     })
+  });
+  describe('rethrow', ()=>{
+    it('should rethrow the error when it exists', ()=>{
+      const err = new Error('i am an error');
+      const error = new errorUtils.errorWrapper('i am an error message',null, err);
+      try{
+        error.rethrow();
+      }catch(thrownError){
+        expect(thrownError.message).to.equal('i am an error');
+      }
+    });
+    it('should throw an error with the message if there is no error', ()=>{
+      const error = new errorUtils.errorWrapper('i am an error message');
+      try{
+        error.rethrow();
+      }catch(thrownError){
+        expect(thrownError.message).to.equal('i am an error message');
+      }
+    });
+    it('should throw an error with a default message if there is no error or message to be thrown', ()=>{
+      const error = new errorUtils.errorWrapper();
+      try{
+        error.rethrow();
+      }catch(thrownError){
+        expect(thrownError.message).to.equal('there is no error or message to be thrown');
+      }
+    })
   })
 });

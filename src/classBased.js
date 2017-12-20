@@ -1,5 +1,5 @@
 // @flow
-exports.errorWrapper = class {
+exports.errorWrapper = class ErrorWrapper{
   constructor(message: string, status: number, err: Error, timestamp:number = Date.now()){
     this._message = message;
     this._status = status;
@@ -42,5 +42,10 @@ exports.errorWrapper = class {
 
   set timestamp(value: number) {
     this._timestamp = value;
+  }
+
+  rethrow(){
+    if(this._err) throw this._err;
+    throw new Error(this._message || 'there is no error or message to be thrown');
   }
 };
