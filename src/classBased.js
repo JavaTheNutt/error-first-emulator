@@ -5,6 +5,11 @@ exports.errorWrapper = class {
     this._status = status;
     this._err = err;
     this._timestamp = timestamp;
+    this._error = true;
+  }
+
+  get error(){
+    return this._error
   }
 
   get message() {

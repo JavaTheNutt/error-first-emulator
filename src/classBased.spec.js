@@ -14,6 +14,10 @@ describe('error utils', ()=>{
       const time = Date.now();
       const err = new errorUtils.errorWrapper(null, null, null,time);
       expect(err.timestamp).to.eql(time);
+    });
+    it('should set error to true', ()=>{
+      const err = new errorUtils.errorWrapper();
+      expect(err.error).to.be.true;
     })
   });
   describe('getters', ()=>{
