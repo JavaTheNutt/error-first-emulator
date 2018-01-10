@@ -1,3 +1,10 @@
+**v1.0.0**
+
+*_TBC_*
+
+- Switched to OOP implementation
+- Added a rethrow method 
+
 **v0.1.0**
 
 *_Dec 17, 2017_*
